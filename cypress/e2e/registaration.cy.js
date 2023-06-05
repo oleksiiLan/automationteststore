@@ -1,20 +1,20 @@
 /// <reference types="cypress"/>
+import {faker} from '@faker-js/faker' //library faker
+import user from "../fixtures/user.json"
+import {login} from '../support/helper.js';
 
-let user = {
-    firstName: 'FirstTestName',
-    lastName: 'LastTestName',
-    email: 'FirstTestName11111111111111111111@mail.com',
-    address: 'Test Address str.',
-    city: 'Kyiv',
-    zone: 'Kyiv',
-    postCode: '37289',
-    countryId: 'Ukraine',
-    username: 'testUsernameForAutomation1111111111111',
-    password: '123QWEqwe'
-  }
-  
+user.username = faker.internet.userName();
+user.firstName = faker.person.firstName();
+user.lastName = faker.person.lastName();
+user.postCode = faker.location.zipCode('####');
+user.address = faker.location.street();
+user.email = faker.internet.email();
+user.city = faker.location.city();
+user.password = faker.internet.password({ length: 20});
+
+
   it('Registration', () => {
-    cy.visit('/');
+    cy.visit('/');//тому що в config прописано
   
     cy.get('.topnavbar [data-id="menu_account"]').click();
   
@@ -43,9 +43,13 @@ let user = {
   
     cy.get('#maincontainer').contains(user.firstName).should('exist');
   
+    cy.clearAllCookies()
+
+    //login(user);
+    cy.login(user); //для commands.js
   })
   
-  it('Authorization', () => {
+  it.skip('Authorization', () => {
   
     cy.log('Open website login page');
     cy.visit('/index.php?rt=account/login');

@@ -1,6 +1,6 @@
 /// <reference types="cypress"/>
 
-describe("Registration and Autorization test", () => {
+describe("Search poduct", () => {
     it("Test", () => {
       cy.visit("https://automationteststore.com/");
     })
